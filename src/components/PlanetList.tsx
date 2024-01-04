@@ -137,6 +137,15 @@ const PlanetList: FC<PlanetListProps> = ({ onSearch, onSelect }) => {
     setSortedPlanets(filteredAndSortedPlanets);
   }, [filteredAndSortedPlanets]);
 
+  const clearFilters = () => {
+    setSortOrder("asc");
+    setDiameterRange([diameterMin, diameterMax]);
+    setSortedPlanets([...planets]);
+    setSelectedClimate("");
+    setSelectedTerrain("");
+    setSearchText("");
+  };
+
   return (
     <>
       {loading === "loading" && <p>Loading...</p>}
@@ -177,6 +186,9 @@ const PlanetList: FC<PlanetListProps> = ({ onSearch, onSelect }) => {
             endValueLabel={String(diameterMax)}
           />
         </div>
+        <button className="clear-button" onClick={clearFilters}>
+          Clear filters
+        </button>
       </div>
       <table
         align="center"

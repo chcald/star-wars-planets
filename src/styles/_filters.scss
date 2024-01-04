@@ -3,6 +3,12 @@
   gap: 20px;
   padding-bottom: 2rem;
 
+  .clear-button {
+    height: 45px;
+    align-self: end;
+    border-radius: 8px;
+  }
+
   .slider-filter {
     width: 50%;
   }
@@ -19,6 +25,9 @@
 
     .slider-filter {
       width: 100%;
+    }
+    .clear-button {
+      align-self: center;
     }
 
     .inputs-container {
