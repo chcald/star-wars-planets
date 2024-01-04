@@ -31,7 +31,17 @@ const PlanetList: FC<PlanetListProps> = ({ onSearch, onSelect }) => {
   // const error = useSelector((state: any) => state.planets.error);
 
   const [sortedPlanets, setSortedPlanets] = useState([...planets]);
-  const [sortOrder, setSortOrder] = useState<"asc" | "desc">("asc");
+  // const [sortOrder, setSortOrder] = useState<"asc" | "desc">("asc");
+  const [sortBy, setSortBy] = useState<"name" | "population" | "diameter" | "">(
+    ""
+  );
+  const [sortOrderName, setSortOrderName] = useState<"asc" | "desc">("asc");
+  const [sortOrderPopulation, setSortOrderPopulation] = useState<
+    "asc" | "desc"
+  >("asc");
+  const [sortOrderDiameter, setSortOrderDiameter] = useState<"asc" | "desc">(
+    "asc"
+  );
 
   const [diameterRange, setDiameterRange] = useState<[number, number]>([0, 0]);
 
@@ -69,10 +79,28 @@ const PlanetList: FC<PlanetListProps> = ({ onSearch, onSelect }) => {
     setDiameterRange([values[0], values[1]]);
   };
 
-  const handleSortOrderChange = () => {
-    // Change the order from asc to desc and vice versa
-    setSortOrder((prevOrder) => (prevOrder === "asc" ? "desc" : "asc"));
+  const handleSortOrderChange = (
+    field: "name" | "population" | "diameter" | ""
+  ) => {
+    // Change the order from asc to desc and vice versa depending on the field
+    if (field === "name") {
+      setSortOrderName((prevOrder) => (prevOrder === "asc" ? "desc" : "asc"));
+    } else if (field === "population") {
+      setSortOrderPopulation((prevOrder) =>
+        prevOrder === "asc" ? "desc" : "asc"
+      );
+    } else if (field === "diameter") {
+      setSortOrderDiameter((prevOrder) =>
+        prevOrder === "asc" ? "desc" : "asc"
+      );
+    }
+
+    setSortBy(field);
   };
+
+  // const handleSortByChange = (field: 'name' | 'population' | 'diameter') => {
+  //   setSortBy(field);
+  // };
 
   const applyFilters = () => {
     let filteredPlanets = [...planets];
@@ -100,25 +128,49 @@ const PlanetList: FC<PlanetListProps> = ({ onSearch, onSelect }) => {
       return diameter >= diameterRange[0] && diameter <= diameterRange[1];
     });
 
-    // const sortedByDiameter = filteredByDiameter.sort((a, b) => {
-    //   const diameterA = Number(a.diameter);
-    //   const diameterB = Number(b.diameter);
-    //   return diameterA - diameterB;
-    // });
+    let sortedPlanets = null;
+    if (sortBy === "name") {
+      // Apply sorting to the "name" field
+      sortedPlanets = filteredByDiameter.sort((a, b) => {
+        const nameA = a.name.toLowerCase();
+        const nameB = b.name.toLowerCase();
 
-    // Apply sorting to the "name" field
-    const sortedPlanets = filteredByDiameter.sort((a, b) => {
-      const nameA = a.name.toLowerCase();
-      const nameB = b.name.toLowerCase();
+        if (sortOrderName === "asc") {
+          return nameA.localeCompare(nameB);
+        } else {
+          return nameB.localeCompare(nameA);
+        }
+      });
+    }
+    if (sortBy === "diameter") {
+      // Apply sorting to the "diameter" field
+      sortedPlanets = filteredByDiameter.sort((a, b) => {
+        const diameterA = Number(a.diameter);
+        const diameterB = Number(b.diameter);
 
-      if (sortOrder === "asc") {
-        return nameA.localeCompare(nameB);
-      } else {
-        return nameB.localeCompare(nameA);
-      }
-    });
+        if (sortOrderDiameter === "asc") {
+          return diameterA - diameterB;
+        } else {
+          return diameterB - diameterA;
+        }
+      });
+    }
 
-    return sortedPlanets;
+    if (sortBy === "population") {
+      // Apply sorting to the "diameter" field
+      sortedPlanets = filteredByDiameter.sort((a, b) => {
+        const populationA = Number(a.population);
+        const populationB = Number(b.population);
+
+        if (sortOrderPopulation === "asc") {
+          return populationA - populationB;
+        } else {
+          return populationB - populationA;
+        }
+      });
+    }
+
+    return sortedPlanets || filteredByDiameter;
   };
 
   const filteredAndSortedPlanets = useMemo(
@@ -129,7 +181,9 @@ const PlanetList: FC<PlanetListProps> = ({ onSearch, onSelect }) => {
       selectedTerrain,
       diameterRange,
       planets,
-      sortOrder,
+      sortOrderName,
+      sortOrderPopulation,
+      sortOrderDiameter,
     ]
   );
 
@@ -138,7 +192,9 @@ const PlanetList: FC<PlanetListProps> = ({ onSearch, onSelect }) => {
   }, [filteredAndSortedPlanets]);
 
   const clearFilters = () => {
-    setSortOrder("asc");
+    setSortOrderName("asc");
+    setSortOrderPopulation("asc");
+    setSortOrderDiameter("asc");
     setDiameterRange([diameterMin, diameterMax]);
     setSortedPlanets([...planets]);
     setSelectedClimate("");
@@ -189,7 +245,7 @@ const PlanetList: FC<PlanetListProps> = ({ onSearch, onSelect }) => {
           />
         </div>
         <button className="clear-button" onClick={clearFilters}>
-          <span>Clear filters ⟲</span>
+          <span>Clear filters </span>⟲
         </button>
       </div>
       <table
@@ -203,16 +259,26 @@ const PlanetList: FC<PlanetListProps> = ({ onSearch, onSelect }) => {
           <tr>
             <th>
               Name{" "}
-              <button onClick={() => handleSortOrderChange()}>
-                {sortOrder === "asc" ? "↑" : "↓"}
+              <button onClick={() => handleSortOrderChange("name")}>
+                {sortOrderName === "asc" ? "↑" : "↓"}
               </button>
             </th>
             <th>Climate</th>
             <th>Terrain</th>
-            <th>Diameter</th>
+            <th>
+              Diameter{" "}
+              <button onClick={() => handleSortOrderChange("diameter")}>
+                {sortOrderDiameter === "asc" ? "↑" : "↓"}
+              </button>
+            </th>
             <th>Gravity</th>
             <th>Surface water</th>
-            <th>Population</th>
+            <th>
+              Population{" "}
+              <button onClick={() => handleSortOrderChange("population")}>
+                {sortOrderPopulation === "asc" ? "↑" : "↓"}
+              </button>
+            </th>
           </tr>
         </thead>
         <tbody className="sortable">
