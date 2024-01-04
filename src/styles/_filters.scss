@@ -1,0 +1,28 @@
+.filters-container {
+  display: flex;
+  gap: 20px;
+  padding-bottom: 2rem;
+
+  .slider-filter {
+    width: 50%;
+  }
+  .inputs-container {
+    align-self: end;
+    display: flex;
+    gap: 10px;
+  }
+
+  @media screen and (max-width: 768px) {
+    flex-direction: column;
+    width: 100%;
+    justify-content: center;
+
+    .slider-filter {
+      width: 100%;
+    }
+
+    .inputs-container {
+      flex-direction: column;
+    }
+  }
+}
