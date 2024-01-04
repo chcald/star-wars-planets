@@ -1,33 +1,51 @@
-# React + TypeScript + Vite
+# Star Wars Planets
 
-# Star Wars Planets challange test
+This project is a web app developed with REACT and with [Vite](https://vitejs.dev/guide/).
 
-it's a test for Qupos
+Star Wars planets provides :
 
-## Description
+- a list of Star Wars planets.
+- details for a selected planet
+- search filter on planets
 
-It is a project to order star wars planets from a list
+## Requirements
 
-## Getting Started
+Node.js installed
+Git installed
 
-### Installing
+## How to run the project
 
-Previosly have installed vite
-
-run: npm install or yarn 
-
-### Executing program
-
-* How to run the program
-* Step-by-step bullets
-
-* yarn run dev OR npm run dev
-
-## Help
-
-Any advise for common problems or issues.
+First, open a terminal and clone the project with 
 ```
-command to run if program contains helper info
+git clone https://github.com/chcald/star-wars-planets
+```
+
+Move to the project cloned
+```
+cd star-wars-planets
+```
+
+Build the projet
+```
+npm install
+```
+or
+```
+yarn
+```
+
+Launch the application with 
+```
+npm run dev
+```
+or
+```
+yarn run dev
+```
+
+A browser will open at the address and you can navigate into the app
+```
+http://localhost:5173/
 ```
 
 ## Authors
@@ -47,11 +65,4 @@ ex. [@chcalderon](https://twitter.com/chcalderon)
 
 ## License
 
-This project is licensed under the [NAME HERE] License - see the LICENSE.md file for details
-
-
-- References
-
-https://vitejs.dev/guide/features.html#css
-
-https://www.npmjs.com/package/react-slider
+This project is licensed under the MIT License.
