@@ -8,6 +8,16 @@ Star Wars planets provides :
 - details for a selected planet
 - search filter on planets
 
+## Screenshots
+
+### Mobile 
+![mobile view](./docs/mobile.png "Mobile view")
+
+### Desktop 
+![desktop view](./docs/desktop.png "Desktop view")
+
+
+
 ## Requirements
 
 Node.js installed
