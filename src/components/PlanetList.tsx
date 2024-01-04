@@ -240,8 +240,8 @@ const PlanetList: FC<PlanetListProps> = ({ onSearch, onSelect }) => {
             endValueLabel={String(diameterMax)}
           />
         </div>
-        <button className="clear-button" onClick={clearFilters}>
-          <span>Clear filters </span>⟲
+        <button className="clear-button btn" onClick={clearFilters}>
+          <span>Clear filters ⟲</span>
         </button>
       </div>
       {sortedPlanets.length > 0 ? (
@@ -256,7 +256,10 @@ const PlanetList: FC<PlanetListProps> = ({ onSearch, onSelect }) => {
             <tr>
               <th>
                 Name{" "}
-                <button onClick={() => handleSortOrderChange("name")}>
+                <button
+                  className="btn"
+                  onClick={() => handleSortOrderChange("name")}
+                >
                   {sortOrderName === "asc" ? "↑" : "↓"}
                 </button>
               </th>
@@ -264,7 +267,10 @@ const PlanetList: FC<PlanetListProps> = ({ onSearch, onSelect }) => {
               <th>Terrain</th>
               <th>
                 Diameter{" "}
-                <button onClick={() => handleSortOrderChange("diameter")}>
+                <button
+                  className="btn"
+                  onClick={() => handleSortOrderChange("diameter")}
+                >
                   {sortOrderDiameter === "asc" ? "↑" : "↓"}
                 </button>
               </th>
@@ -272,7 +278,10 @@ const PlanetList: FC<PlanetListProps> = ({ onSearch, onSelect }) => {
               <th>Surface water</th>
               <th>
                 Population{" "}
-                <button onClick={() => handleSortOrderChange("population")}>
+                <button
+                  className="btn"
+                  onClick={() => handleSortOrderChange("population")}
+                >
                   {sortOrderPopulation === "asc" ? "↑" : "↓"}
                 </button>
               </th>

@@ -2,14 +2,6 @@
     position: relative;
     text-align: center;
   
-    .slider-child {
-      width: 100%;
-    }
-  
-    .slider {
-      width: 100%;
-    }
-  
     .slider-track {
       top: 50%;
       transform: translate(0%, -50%);
@@ -23,14 +15,14 @@
       width: 18px;
       height: 18px;
       text-align: center;
-      background-color: grey;
+      background-color: #FFA500;
       cursor: pointer;
       border-radius: 18px;
       border: 2px solid white;
       box-sizing: border-box;
   
       &:hover {
-        outline: 8px solid grey;
+        outline: 4px solid grey;
       }
   
       &::before {
@@ -49,7 +41,6 @@
     }
   
     .value-labels {
-      font-weight: 300;
       padding: 0 0 20px 0;
       display: flex;
       justify-content: space-between;
