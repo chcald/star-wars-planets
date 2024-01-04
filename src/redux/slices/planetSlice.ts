@@ -2,7 +2,7 @@ import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
 import { Planet } from "../../types/planets/interfaces";
 
-// Acción asincrónica usando Redux Toolkit
+// Asynchronous action using Redux Toolkit
 export const fetchPlanets = createAsyncThunk(
   "planets/fetchPlanets",
   async () => {
@@ -11,7 +11,7 @@ export const fetchPlanets = createAsyncThunk(
   }
 );
 
-// Slice de Redux Toolkit
+// Redux Toolkit Slice
 const planetSlice = createSlice({
   name: "planets",
   initialState: {
@@ -33,17 +33,22 @@ const planetSlice = createSlice({
       .addCase(fetchPlanets.fulfilled, (state, action) => {
         state.loading = "idle";
         state.data = action.payload;
-        state.filters.climate.options = Array.from(
-          new Set(state.data.map((planet: Planet) => planet.climate))
-        );
-        state.filters.terrain.options = Array.from(
-          new Set(state.data.map((planet: Planet) => planet.terrain))
-        );
-        const diameterOptions: number[] = state.data.map(
-          (planet: Planet) => planet.diameter
-        );
-        state.filters.diameter.max = Math.max(...diameterOptions);
-        state.filters.diameter.min = Math.min(...diameterOptions);
+        try {
+          state.filters.climate.options = Array.from(
+            new Set(state.data.map((planet: Planet) => planet.climate))
+          );
+          state.filters.terrain.options = Array.from(
+            new Set(state.data.map((planet: Planet) => planet.terrain))
+          );
+          const diameterOptions: number[] = state.data.map(
+            (planet: Planet) => planet.diameter
+          );
+          state.filters.diameter.max = Math.max(...diameterOptions);
+          state.filters.diameter.min = Math.min(...diameterOptions);
+        } catch (error) {
+          // Capture and handle specific errors in business logic
+          state.error = `Error getting filter options: ${String(error)}`;
+        }
       })
       .addCase(fetchPlanets.rejected, (state, action) => {
         state.loading = "idle";

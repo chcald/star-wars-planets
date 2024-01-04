@@ -6,8 +6,7 @@ const Planets: FC = () => {
   const [selectedPlanet, setSelectedPlanet] = useState<Planet | null>(null);
 
   const handleSearch = (term: string) => {
-    // Aquí se puede realizar la lógica de búsqueda
-    // en este ejemplo, simplemente logueamos los resultados
+    // Here you can perform the search logic
     console.log("Search term:", term);
   };
 
@@ -17,11 +16,11 @@ const Planets: FC = () => {
 
   return (
     <div className="main-container">
-      <h1>Planetas de Star Wars</h1>
+      <h1>Star Wars planets</h1>
       <PlanetList onSearch={handleSearch} onSelect={handleSelect} />
       {selectedPlanet && (
         <div>
-          <h2>Planeta seleccionado:</h2>
+          <h2>Selected planet:</h2>
           <p>{JSON.stringify(selectedPlanet)}</p>
         </div>
       )}

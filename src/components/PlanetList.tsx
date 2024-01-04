@@ -44,7 +44,7 @@ const PlanetList: FC<PlanetListProps> = ({ onSearch, onSelect }) => {
   }, [loading]);
 
   useEffect(() => {
-    // Disparar la acción de Redux Toolkit para obtener los planetas
+    // Trigger action from Redux Toolkit to get planets
     dispatch(fetchPlanets());
   }, [dispatch]);
 
@@ -70,7 +70,7 @@ const PlanetList: FC<PlanetListProps> = ({ onSearch, onSelect }) => {
   };
 
   const handleSortOrderChange = () => {
-    // Cambiar el orden de asc a desc y viceversa
+    // Change the order from asc to desc and vice versa
     setSortOrder((prevOrder) => (prevOrder === "asc" ? "desc" : "asc"));
   };
 
@@ -106,7 +106,7 @@ const PlanetList: FC<PlanetListProps> = ({ onSearch, onSelect }) => {
     //   return diameterA - diameterB;
     // });
 
-    // Aplicar ordenamiento en el campo "name"
+    // Apply sorting to the "name" field
     const sortedPlanets = filteredByDiameter.sort((a, b) => {
       const nameA = a.name.toLowerCase();
       const nameB = b.name.toLowerCase();
@@ -164,13 +164,15 @@ const PlanetList: FC<PlanetListProps> = ({ onSearch, onSelect }) => {
           <ComboFilter
             options={climateOptions}
             filter={selectedClimate}
-            label={"Climate"}
+            noSelectedLabel="All climates"
+            label="Climate"
             onChange={handleClimateChange}
           />
           <ComboFilter
             options={terrainOptions}
             filter={selectedTerrain}
-            label={"Terrain"}
+            noSelectedLabel="All terrains"
+            label="Terrain"
             onChange={handleTerrainChange}
           />
         </div>
@@ -181,13 +183,13 @@ const PlanetList: FC<PlanetListProps> = ({ onSearch, onSelect }) => {
             min={diameterMin}
             max={diameterMax}
             step={100}
-            label={"Diameter:"}
+            label="Diameter:"
             startValueLabel={String(diameterMin)}
             endValueLabel={String(diameterMax)}
           />
         </div>
         <button className="clear-button" onClick={clearFilters}>
-          Clear filters
+          <span>Clear filters ⟲</span>
         </button>
       </div>
       <table
