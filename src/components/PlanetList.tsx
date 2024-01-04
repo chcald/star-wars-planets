@@ -28,10 +28,9 @@ const PlanetList: FC<PlanetListProps> = ({ onSearch, onSelect }) => {
   );
 
   const loading = useSelector((state: any) => state.planets.loading);
-  // const error = useSelector((state: any) => state.planets.error);
+  const error = useSelector((state: any) => state.planets.error);
 
   const [sortedPlanets, setSortedPlanets] = useState([...planets]);
-  // const [sortOrder, setSortOrder] = useState<"asc" | "desc">("asc");
   const [sortBy, setSortBy] = useState<"name" | "population" | "diameter" | "">(
     ""
   );
@@ -97,10 +96,6 @@ const PlanetList: FC<PlanetListProps> = ({ onSearch, onSelect }) => {
 
     setSortBy(field);
   };
-
-  // const handleSortByChange = (field: 'name' | 'population' | 'diameter') => {
-  //   setSortBy(field);
-  // };
 
   const applyFilters = () => {
     let filteredPlanets = [...planets];
@@ -205,6 +200,7 @@ const PlanetList: FC<PlanetListProps> = ({ onSearch, onSelect }) => {
   return (
     <>
       {loading === "loading" && <p>Loading...</p>}
+      {error && <div className="error-message">{error}</div>}
       <div className="filters-container">
         <div className="inputs-container">
           <div>
@@ -248,53 +244,57 @@ const PlanetList: FC<PlanetListProps> = ({ onSearch, onSelect }) => {
           <span>Clear filters </span>⟲
         </button>
       </div>
-      <table
-        align="center"
-        width="100%"
-        border={1}
-        cellSpacing="0"
-        cellPadding="4"
-      >
-        <thead>
-          <tr>
-            <th>
-              Name{" "}
-              <button onClick={() => handleSortOrderChange("name")}>
-                {sortOrderName === "asc" ? "↑" : "↓"}
-              </button>
-            </th>
-            <th>Climate</th>
-            <th>Terrain</th>
-            <th>
-              Diameter{" "}
-              <button onClick={() => handleSortOrderChange("diameter")}>
-                {sortOrderDiameter === "asc" ? "↑" : "↓"}
-              </button>
-            </th>
-            <th>Gravity</th>
-            <th>Surface water</th>
-            <th>
-              Population{" "}
-              <button onClick={() => handleSortOrderChange("population")}>
-                {sortOrderPopulation === "asc" ? "↑" : "↓"}
-              </button>
-            </th>
-          </tr>
-        </thead>
-        <tbody className="sortable">
-          {sortedPlanets.map((planet: any) => (
-            <tr key={planet.name} onClick={() => handleSelect(planet)}>
-              <td>{planet.name} </td>
-              <td>{planet.climate}</td>
-              <td>{planet.terrain}</td>
-              <td>{planet.diameter}</td>
-              <td>{planet.gravity}</td>
-              <td>{planet.surface_water}</td>
-              <td>{planet.population}</td>
+      {sortedPlanets.length > 0 ? (
+        <table
+          align="center"
+          width="100%"
+          border={1}
+          cellSpacing="0"
+          cellPadding="3"
+        >
+          <thead>
+            <tr>
+              <th>
+                Name{" "}
+                <button onClick={() => handleSortOrderChange("name")}>
+                  {sortOrderName === "asc" ? "↑" : "↓"}
+                </button>
+              </th>
+              <th>Climate</th>
+              <th>Terrain</th>
+              <th>
+                Diameter{" "}
+                <button onClick={() => handleSortOrderChange("diameter")}>
+                  {sortOrderDiameter === "asc" ? "↑" : "↓"}
+                </button>
+              </th>
+              <th>Gravity</th>
+              <th>Surface water</th>
+              <th>
+                Population{" "}
+                <button onClick={() => handleSortOrderChange("population")}>
+                  {sortOrderPopulation === "asc" ? "↑" : "↓"}
+                </button>
+              </th>
             </tr>
-          ))}
-        </tbody>
-      </table>
+          </thead>
+          <tbody className="sortable">
+            {sortedPlanets.map((planet: any) => (
+              <tr key={planet.name} onClick={() => handleSelect(planet)}>
+                <td>{planet.name} </td>
+                <td>{planet.climate}</td>
+                <td>{planet.terrain}</td>
+                <td>{planet.diameter}</td>
+                <td>{planet.gravity}</td>
+                <td>{planet.surface_water}</td>
+                <td>{planet.population}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      ) : (
+        <p>No matches found</p>
+      )}
     </>
   );
 };
