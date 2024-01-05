@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { fetchPlanets } from "../redux/slices/planetSlice";
 import { AppDispatch } from "../redux/store";
 import ComboFilter from "./ComboFilter";
-import Slider from "./Slider";
+import SliderFilter from "./SliderFilter";
 import { Planet } from "../types/planets/interfaces";
 
 interface PlanetListProps {
@@ -74,8 +74,8 @@ const PlanetList: FC<PlanetListProps> = ({ onSearch, onSelect }) => {
     onSelect(planet);
   };
 
-  const handleDiameterChange = (values: number[]) => {
-    setDiameterRange([values[0], values[1]]);
+  const handleDiameterChange = (values: number | number[]) => {
+    if (Array.isArray(values)) setDiameterRange([values[0], values[1]]);
   };
 
   const handleSortOrderChange = (
@@ -229,12 +229,12 @@ const PlanetList: FC<PlanetListProps> = ({ onSearch, onSelect }) => {
           />
         </div>
         <div className="slider-filter">
-          <Slider
+          <SliderFilter
             value={diameterRange}
             onChange={handleDiameterChange}
             min={diameterMin}
             max={diameterMax}
-            step={100}
+            step={1000}
             label="Diameter:"
             startValueLabel={String(diameterMin)}
             endValueLabel={String(diameterMax)}

@@ -1,34 +1,29 @@
+import Slider from "rc-slider";
+import "rc-slider/assets/index.css";
 import { ReactNode } from "react";
-import ReactSlider from "react-slider";
 
 interface SliderProps {
   label: string | ReactNode;
   min: number;
   max: number;
   step?: number;
-  minDistance?: number;
-  value: Array<number>;
-  defaultValue?: Array<number>;
+  value: number[];
   endValueLabel: string;
   startValueLabel: string;
-  onChange: (values: number[]) => void;
+  onChange: (value: number | number[]) => void;
 }
 
-const Slider = (props: SliderProps) => {
+const SliderFilter = (props: SliderProps) => {
   const {
     label,
     min,
     max,
     step,
     value,
-    minDistance,
-    defaultValue,
     startValueLabel,
     endValueLabel,
     onChange,
   } = props;
-  const controlProps = value ? { value } : { defaultValue };
-
   return (
     <div className="slider-container">
       {label}
@@ -37,21 +32,19 @@ const Slider = (props: SliderProps) => {
         <div id="slider-end-value">{endValueLabel}</div>
       </div>
       <div className="slider">
-        <ReactSlider
-          ariaLabelledby={["slider-start-value", "slider-end-value"]}
-          className="slider-child"
-          thumbClassName="slider-thumb"
-          trackClassName="slider-track"
+        <Slider
+          dots
+          step={step}
+          range
           min={min}
           max={max}
-          step={step}
-          minDistance={minDistance}
+          defaultValue={[0, 0]}
+          value={value}
           onChange={onChange}
-          {...controlProps}
         />
       </div>
     </div>
   );
 };
 
-export default Slider;
+export default SliderFilter;
