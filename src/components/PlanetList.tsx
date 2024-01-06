@@ -274,8 +274,6 @@ const PlanetList: FC<PlanetListProps> = ({ onSearch, onSelect }) => {
                   {sortOrderDiameter === "asc" ? "↑" : "↓"}
                 </button>
               </th>
-              <th>Gravity</th>
-              <th>Surface water</th>
               <th>
                 Population{" "}
                 <button
@@ -294,8 +292,6 @@ const PlanetList: FC<PlanetListProps> = ({ onSearch, onSelect }) => {
                 <td>{planet.climate}</td>
                 <td>{planet.terrain}</td>
                 <td>{planet.diameter}</td>
-                <td>{planet.gravity}</td>
-                <td>{planet.surface_water}</td>
                 <td>{planet.population}</td>
               </tr>
             ))}

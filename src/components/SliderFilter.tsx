@@ -38,7 +38,6 @@ const SliderFilter = (props: SliderProps) => {
           range
           min={min}
           max={max}
-          defaultValue={[0, 0]}
           value={value}
           onChange={onChange}
         />
