@@ -5,7 +5,7 @@ This project is a web app developed with REACT and with [Vite](https://vitejs.de
 Star Wars planets provides :
 
 - a list of Star Wars planets.
-- details for a selected planet
+- details for a selected planet, including its residents.
 - search filter on planets
 
 ## Screenshots

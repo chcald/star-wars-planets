@@ -286,7 +286,7 @@ const PlanetList: FC<PlanetListProps> = ({ onSearch, onSelect }) => {
             </tr>
           </thead>
           <tbody className="sortable">
-            {sortedPlanets.map((planet: any) => (
+            {sortedPlanets.map((planet: Planet) => (
               <tr key={planet.name} onClick={() => handleSelect(planet)}>
                 <td>{planet.name} </td>
                 <td>{planet.climate}</td>

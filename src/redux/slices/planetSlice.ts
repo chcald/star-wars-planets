@@ -1,13 +1,22 @@
-import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
+import { createSlice, createAsyncThunk, PayloadAction } from "@reduxjs/toolkit";
 import axios from "axios";
-import { Planet } from "../../types/planets/interfaces";
+import { Planet, Resident } from "../../types/planets/interfaces";
 
 // Asynchronous action using Redux Toolkit
-export const fetchPlanets = createAsyncThunk(
+export const fetchPlanets = createAsyncThunk<Planet[], void>(
   "planets/fetchPlanets",
   async () => {
     const response = await axios.get("https://swapi.dev/api/planets/");
-    return response.data.results;
+    return response.data.results as Planet[];
+  }
+);
+
+// Asynchronous action for fetching residents based on URL
+export const fetchResident = createAsyncThunk<Resident, string>(
+  "planets/fetchResident",
+  async (url: string) => {
+    const response = await axios.get(url);
+    return response.data as Resident;
   }
 );
 
@@ -15,7 +24,9 @@ export const fetchPlanets = createAsyncThunk(
 const planetSlice = createSlice({
   name: "planets",
   initialState: {
-    data: [],
+    data: [] as Planet[],
+    residents: [] as Resident[],
+    loadingResidents: "idle",
     filters: {
       climate: { options: [] as string[] },
       terrain: { options: [] as string[] },
@@ -53,6 +64,21 @@ const planetSlice = createSlice({
       .addCase(fetchPlanets.rejected, (state, action) => {
         state.loading = "idle";
         state.error = `Error: ${String(action.error.message)}`;
+      })
+      .addCase(fetchResident.pending, (state) => {
+        state.loadingResidents = "loading";
+      })
+      .addCase(fetchResident.fulfilled, (state, action: PayloadAction<Resident>) => {
+        // Handle fulfilled state for fetchResidents
+        state.loadingResidents = "idle";
+        state.residents.push(action.payload); // Add the fetched resident to the array
+      })
+      .addCase(fetchResident.rejected, (state, action) => {
+        // Handle rejected state for fetchResidents
+        state.loadingResidents = "idle";
+        state.error = `Error fetching residents: ${String(
+          action.error.message
+        )}`;
       });
   },
 });
