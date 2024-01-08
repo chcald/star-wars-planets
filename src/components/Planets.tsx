@@ -7,10 +7,6 @@ const Planets: FC = () => {
   const ref = useRef<null | HTMLDivElement>(null);
   const [selectedPlanet, setSelectedPlanet] = useState<Planet | null>(null);
 
-  const handleSearch = (term: string) => {
-    console.log("Search term:", term);
-  };
-
   const handleSelect = (planet: Planet) => {
     setSelectedPlanet(planet);
     // The setTimeout is because the first time you click on the table the element does not exist
@@ -22,7 +18,7 @@ const Planets: FC = () => {
   return (
     <div className="main-container">
       <h1>Star Wars planets</h1>
-      <PlanetList onSearch={handleSearch} onSelect={handleSelect} />
+      <PlanetList onSelect={handleSelect} />
       {selectedPlanet && (
         <div ref={ref}>
           <h2>Detail planet:</h2>

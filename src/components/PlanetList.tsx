@@ -7,11 +7,10 @@ import SliderFilter from "./SliderFilter";
 import { Planet } from "../types/planets/interfaces";
 
 interface PlanetListProps {
-  onSearch: (term: string) => void;
   onSelect: (planet: Planet) => void;
 }
 
-const PlanetList: FC<PlanetListProps> = ({ onSearch, onSelect }) => {
+const PlanetList: FC<PlanetListProps> = ({ onSelect }) => {
   const dispatch = useDispatch<AppDispatch>();
   const planets = useSelector((state: any) => state.planets.data);
   const climateOptions = useSelector(
@@ -67,7 +66,6 @@ const PlanetList: FC<PlanetListProps> = ({ onSearch, onSelect }) => {
 
   const handleSearchTextChange = (e: ChangeEvent<HTMLInputElement>) => {
     setSearchText(e.target.value);
-    onSearch(e.target.value);
   };
 
   const handleSelect = (planet: Planet) => {
